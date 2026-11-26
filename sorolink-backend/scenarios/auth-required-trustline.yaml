@@ -1,0 +1,47 @@
+schemaVersion: 1
+id: auth-required-trustline
+version: 1
+name: Authorization-required trustline
+description: Issuer sets AUTH_REQUIRED flag; recipient establishes a trustline; issuer authorizes it and sends the asset; recipient balance verified.
+network: testnet
+accounts:
+  - id: issuer
+    generate: true
+    fund: true
+  - id: recipient
+    generate: true
+    fund: true
+assets:
+  - id: regulated
+    type: issued
+    code: REG
+    issuer: issuer
+steps:
+  - id: issuer-sets-auth-required
+    type: setOptions
+    account: issuer
+    setFlags: AUTH_REQUIRED_FLAG
+  - id: recipient-establishes-trustline
+    type: changeTrust
+    account: recipient
+    asset: regulated
+    limit: "1000"
+  - id: issuer-authorizes-trustline
+    type: setTrustLineFlags
+    account: issuer
+    trustor: recipient
+    asset: regulated
+    setFlags: AUTHORIZED_FLAG
+  - id: issuer-sends-asset
+    type: payment
+    from: issuer
+    to: recipient
+    asset: regulated
+    amount: "100"
+assertions:
+  - type: balanceEquals
+    account: recipient
+    asset: regulated
+    amount: "100"
+  - type: stepSucceeded
+    step: issuer-sends-asset

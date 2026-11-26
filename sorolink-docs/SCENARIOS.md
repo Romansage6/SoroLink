@@ -28,6 +28,7 @@ ESURE includes 12 bundled scenarios for Testnet integration testing:
 | `minimum-xlm-payment` | Send minimum viable XLM (1 stroop) | Pass |
 | `minimum-issued-asset-payment` | Transfer the smallest issued-asset unit between holders | Pass; sender and recipient balances are exact |
 | `path-payment` | Create EUR/XLM and USDC/EUR offers and send XLM through EUR to deliver USDC | Pass on Testnet |
+| `auth-required-trustline` | Issuer sets AUTH_REQUIRED; recipient establishes trustline; issuer authorizes it and sends asset; balance verified | Pass on Testnet |
 
 These scenarios demonstrate XLM transfers, issued assets, trustline management,
 expected failure handling, and multi-step transaction flows that Stellar developers
